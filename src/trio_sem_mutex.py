@@ -113,9 +113,9 @@ Usage...
 """
 Sample output...
 
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-<module>()::29] URLS_COUNT, ``10``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-<module>()::31] LIMIT, ``3``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-<module>()::32] 
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-<module>()::29] URLS_COUNT, ``10``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-<module>()::31] LIMIT, ``3``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-<module>()::32] 
 ---
 For 10 urls, and a limit of 3 requests at-a-time, 
   we should expect 4 sets of calls, with each call and thus each set taking about 2 seconds. 
@@ -123,76 +123,76 @@ With a little extra time for overhead, and sequential json-file writes,
   the total time should be a little over 8 seconds.
 ---
 
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-main()::80] total_delay, ``19.6`` seconds
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-main()::81] url_data, ``[{'job_name': '2006', 'url': 'http://httpbin.org/delay/2.006'},
- {'job_name': '1920', 'url': 'http://httpbin.org/delay/1.92'},
- {'job_name': '1806', 'url': 'http://httpbin.org/delay/1.806'},
- {'job_name': '2158', 'url': 'http://httpbin.org/delay/2.158'},
- {'job_name': '1964', 'url': 'http://httpbin.org/delay/1.964'},
- {'job_name': '1848', 'url': 'http://httpbin.org/delay/1.848'},
- {'job_name': '2087', 'url': 'http://httpbin.org/delay/2.087'},
- {'job_name': '2032', 'url': 'http://httpbin.org/delay/2.032'},
- {'job_name': '1808', 'url': 'http://httpbin.org/delay/1.808'},
- {'job_name': '1971', 'url': 'http://httpbin.org/delay/1.971'}]``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 7 waiting>``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::50] job, ``2032`` get starting
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 7 waiting>``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::50] job, ``1808`` get starting
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 7 waiting>``
-[04/Mar/2023 17:02:01] DEBUG [trio_sem_mutex-fetch()::50] job, ``1971`` get starting
-[04/Mar/2023 17:02:03] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.971 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::55] job, ``1971`` response received
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::58] job, ``1971``; elapsed_time, ``2.0823427500436082``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::64] job, ``1971`` written to json file
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 6 waiting>``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::50] job, ``2087`` get starting
-[04/Mar/2023 17:02:03] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.808 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::55] job, ``1808`` response received
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::58] job, ``1808``; elapsed_time, ``2.2007986250100657``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::64] job, ``1808`` written to json file
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 5 waiting>``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::50] job, ``1848`` get starting
-[04/Mar/2023 17:02:03] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.032 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::55] job, ``2032`` response received
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::58] job, ``2032``; elapsed_time, ``2.2878178749233484``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::64] job, ``2032`` written to json file
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 4 waiting>``
-[04/Mar/2023 17:02:03] DEBUG [trio_sem_mutex-fetch()::50] job, ``1964`` get starting
-[04/Mar/2023 17:02:05] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.848 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::55] job, ``1848`` response received
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::58] job, ``1848``; elapsed_time, ``2.0166136249899864``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::64] job, ``1848`` written to json file
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 3 waiting>``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::50] job, ``2158`` get starting
-[04/Mar/2023 17:02:05] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.087 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::55] job, ``2087`` response received
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::58] job, ``2087``; elapsed_time, ``2.1519664999796078``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::64] job, ``2087`` written to json file
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 2 waiting>``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::50] job, ``1806`` get starting
-[04/Mar/2023 17:02:05] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.964 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::55] job, ``1964`` response received
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::58] job, ``1964``; elapsed_time, ``2.0312898340635``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::64] job, ``1964`` written to json file
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 1 waiting>``
-[04/Mar/2023 17:02:05] DEBUG [trio_sem_mutex-fetch()::50] job, ``1920`` get starting
-[04/Mar/2023 17:02:07] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.806 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::55] job, ``1806`` response received
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::58] job, ``1806``; elapsed_time, ``1.9417592090321705``
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::64] job, ``1806`` written to json file
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x105ec77f0, 3/3 with 0 waiting>``
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::50] job, ``2006`` get starting
-[04/Mar/2023 17:02:07] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.92 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::55] job, ``1920`` response received
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::58] job, ``1920``; elapsed_time, ``1.994709249935113``
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::64] job, ``1920`` written to json file
-[04/Mar/2023 17:02:07] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.158 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::55] job, ``2158`` response received
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::58] job, ``2158``; elapsed_time, ``2.2306508329929784``
-[04/Mar/2023 17:02:07] DEBUG [trio_sem_mutex-fetch()::64] job, ``2158`` written to json file
-[04/Mar/2023 17:02:09] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.006 "HTTP/1.1 200 OK"
-[04/Mar/2023 17:02:09] DEBUG [trio_sem_mutex-fetch()::55] job, ``2006`` response received
-[04/Mar/2023 17:02:09] DEBUG [trio_sem_mutex-fetch()::58] job, ``2006``; elapsed_time, ``2.144777457928285``
-[04/Mar/2023 17:02:09] DEBUG [trio_sem_mutex-fetch()::64] job, ``2006`` written to json file
-[04/Mar/2023 17:02:09] DEBUG [trio_sem_mutex-main()::99] full_elapsed_time, ``8.337517666979693``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-main()::80] total_delay, ``19.433999999999997`` seconds
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-main()::81] url_data, ``[{'job_name': '2175', 'url': 'http://httpbin.org/delay/2.175'},
+ {'job_name': '1934', 'url': 'http://httpbin.org/delay/1.934'},
+ {'job_name': '1819', 'url': 'http://httpbin.org/delay/1.819'},
+ {'job_name': '1817', 'url': 'http://httpbin.org/delay/1.817'},
+ {'job_name': '2074', 'url': 'http://httpbin.org/delay/2.074'},
+ {'job_name': '1864', 'url': 'http://httpbin.org/delay/1.864'},
+ {'job_name': '1986', 'url': 'http://httpbin.org/delay/1.986'},
+ {'job_name': '1944', 'url': 'http://httpbin.org/delay/1.944'},
+ {'job_name': '1895', 'url': 'http://httpbin.org/delay/1.895'},
+ {'job_name': '1926', 'url': 'http://httpbin.org/delay/1.926'}]``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 7 waiting>``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::50] job, ``1819`` get starting
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 7 waiting>``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::50] job, ``1934`` get starting
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 7 waiting>``
+[04/Mar/2023 17:05:08] DEBUG [trio_sem_mutex-fetch()::50] job, ``2175`` get starting
+[04/Mar/2023 17:05:10] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.819 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:10] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.934 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::55] job, ``1819`` response received
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::55] job, ``1934`` response received
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::58] job, ``1819``; elapsed_time, ``2.030095124966465``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::58] job, ``1934``; elapsed_time, ``2.022778750048019``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::64] job, ``1819`` written to json file
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::64] job, ``1934`` written to json file
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 5 waiting>``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::50] job, ``1817`` get starting
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 5 waiting>``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::50] job, ``2074`` get starting
+[04/Mar/2023 17:05:10] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.175 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::55] job, ``2175`` response received
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::58] job, ``2175``; elapsed_time, ``2.2459352910518646``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::64] job, ``2175`` written to json file
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 4 waiting>``
+[04/Mar/2023 17:05:10] DEBUG [trio_sem_mutex-fetch()::50] job, ``1864`` get starting
+[04/Mar/2023 17:05:12] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.817 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::55] job, ``1817`` response received
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::58] job, ``1817``; elapsed_time, ``1.941491000005044``
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::64] job, ``1817`` written to json file
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 3 waiting>``
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::50] job, ``1986`` get starting
+[04/Mar/2023 17:05:12] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/2.074 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::55] job, ``2074`` response received
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::58] job, ``2074``; elapsed_time, ``2.147264374885708``
+[04/Mar/2023 17:05:12] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.864 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::64] job, ``2074`` written to json file
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::55] job, ``1864`` response received
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 2 waiting>``
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::50] job, ``1944`` get starting
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::58] job, ``1864``; elapsed_time, ``1.9434524590615183``
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::64] job, ``1864`` written to json file
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 1 waiting>``
+[04/Mar/2023 17:05:12] DEBUG [trio_sem_mutex-fetch()::50] job, ``1895`` get starting
+[04/Mar/2023 17:05:14] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.986 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::55] job, ``1986`` response received
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::58] job, ``1986``; elapsed_time, ``2.147870291955769``
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::64] job, ``1986`` written to json file
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::48] limiter-queue, ``<trio.CapacityLimiter at 0x1056178e0, 3/3 with 0 waiting>``
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::50] job, ``1926`` get starting
+[04/Mar/2023 17:05:14] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.895 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::55] job, ``1895`` response received
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::58] job, ``1895``; elapsed_time, ``1.979730417020619``
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::64] job, ``1895`` written to json file
+[04/Mar/2023 17:05:14] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.944 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::55] job, ``1944`` response received
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::58] job, ``1944``; elapsed_time, ``2.342596333939582``
+[04/Mar/2023 17:05:14] DEBUG [trio_sem_mutex-fetch()::64] job, ``1944`` written to json file
+[04/Mar/2023 17:05:16] DEBUG [_client-_send_single_request()::1734] HTTP Request: GET http://httpbin.org/delay/1.926 "HTTP/1.1 200 OK"
+[04/Mar/2023 17:05:16] DEBUG [trio_sem_mutex-fetch()::55] job, ``1926`` response received
+[04/Mar/2023 17:05:16] DEBUG [trio_sem_mutex-fetch()::58] job, ``1926``; elapsed_time, ``2.0467622079886496``
+[04/Mar/2023 17:05:16] DEBUG [trio_sem_mutex-fetch()::64] job, ``1926`` written to json file
+[04/Mar/2023 17:05:16] DEBUG [trio_sem_mutex-main()::99] full_elapsed_time, ``8.173782166908495``
 """
