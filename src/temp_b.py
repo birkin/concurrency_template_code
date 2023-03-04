@@ -13,12 +13,16 @@ logging.basicConfig( level=logging.DEBUG )
 log = logging.getLogger(__name__)
 
 
-LIMIT = int( os.environ.get('ASYNC_PY_TEST__LIMIT', '3') )  # permissible number of concurrent requests
+LIMIT = int( os.environ.get('ASYNC_PY_TEST__LIMIT', '2') )  # permissible number of concurrent requests
 
 
-async def fetch(url, job_name, lock):
+async def fetch(url, job_name, sem, lock):
+    log.debug( f'sem_a, ``{sem.value}``' )
     async with trio.open_nursery() as nursery:
-        async with trio.Semaphore( LIMIT ) as sem:
+        # async with trio.Semaphore( LIMIT ) as sem:
+        
+        async with sem:
+            log.debug( f'sem_b, ``{sem.value}``' )
             start_time = time.monotonic()
             async with httpx.AsyncClient() as client:
                 response = await client.get(url)
@@ -28,16 +32,17 @@ async def fetch(url, job_name, lock):
             end_time = time.monotonic()
             elapsed_time = end_time - start_time
             log.debug( f'job, ``{job_name}``; elapsed_time, ``{elapsed_time}``' )
-            async with lock:
-                with open('results.json', 'a') as f:
-                    json.dump({'url': url, 'time-take': elapsed_time}, f)
-                    f.write('\n')
+            # async with lock:
+            #     time.sleep( 0.25 )
+            #     with open('results.json', 'a') as f:
+            #         json.dump({'url': url, 'time-take': elapsed_time}, f)
+            #         f.write('\n')
 
 async def main():
     pre_start_time = time.monotonic()
     url_data = []
     total_delay = 0
-    for i in range( 10 ):
+    for i in range( 20 ):
         num_a = random.randint(4800, 5200)                          # I want a little variability in the url-delay call
         num = num_a / 10000
         total_delay += num                                          # so total delay will be around 5 seconds
@@ -47,11 +52,12 @@ async def main():
     log.debug( f'url_data, ``{pprint.pformat(url_data)}``' )
 
     lock = trio.Lock()
+    sem = trio.Semaphore( LIMIT )
     async with trio.open_nursery() as nursery:
         for entry in url_data:
             url = entry['url']
             job_name = entry['job_name']
-            nursery.start_soon(fetch, url, job_name, lock)
+            nursery.start_soon(fetch, url, job_name, sem, lock)
 
     post_end_time = time.monotonic()
     full_elapsed_time = post_end_time - pre_start_time
