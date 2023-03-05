@@ -210,7 +210,7 @@ With a little extra time for overhead, and sequential json-file writes,
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::96] job, ``1842``; elapsed_time, ``1.9448090840596706``
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::98] ready to write job, ``1842`` to json file at ``808229.153258875``
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::96] job, ``1819``; elapsed_time, ``1.8873844160698354``
-[05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::98] ready to write job, ``1819`` to json file at ``808229.153523458``
+[05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::98] ready to write job, ``1819`` to json file at ``808229.153523458``  ## NOTE: shows a slight delay before it can get the lock to write.
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::100] got lock for job, ``1842`` about to write to json file at ``808229.153599208``
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-update_json_file()::112] job, ``1842`` written to json file
 [05/Mar/2023 10:13:19] DEBUG [trio_sem_mutex_b-fetch()::86] limiter-queue, ``<trio.CapacityLimiter at 0x104086da0, 3/3 with 0 waiting>``
