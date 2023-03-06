@@ -13,9 +13,13 @@ Rust semaphore and mutex example.
 // use serde::{Deserialize, Serialize};
 
 // set up imports ---------------------------------------------------
+
+#[macro_use]
+extern crate log;
+
+use env_logger::{Builder, Target};
 use rand::Rng;
 
-// set up logging ---------------------------------------------------
 
 
 // set up envars ----------------------------------------------------
@@ -24,6 +28,16 @@ use rand::Rng;
 // main controller --------------------------------------------------
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+
+    // set up logging ---------------------------------------------------
+    let mut log_builder = Builder::from_default_env();
+    log_builder.target(Target::Stdout);
+    log_builder.init();
+    let msg: String = format!(
+        "\n\n-------\n`starting logchecker_project code at, ``{:?}``",
+        local_time.to_rfc3339()
+    );
+    info!("{}", msg);
 
     let urls: Vec<std::string::String> = make_urls().await;
     println!("urls, ``{:#?}``", urls);
