@@ -1,5 +1,5 @@
 [package]
-name = "weather_api_code"
+name = "concurrency_template_code"
 version = "0.1.0"
 edition = "2021"
 

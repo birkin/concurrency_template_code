@@ -34,7 +34,14 @@ use std::io::Write;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
+    println!( "starting main()" );
     // set up logging ---------------------------------------------------
+    // let log_level = std::env::var("API_KEY")?;
+    let log_level = std::env::var("CNCRNCY_TMPLT__LOG_LEVEL").unwrap_or_else(|error| {
+        panic!("Problem getting envar -- ``{:?}``", error);
+    });
+    println!("log_level, ``{}``", log_level);
+
     let mut builder = Builder::new();
     builder.filter(None, LevelFilter::Info);
 

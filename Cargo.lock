@@ -88,6 +88,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "concurrency_template_code"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "dotenv",
+ "env_logger",
+ "futures",
+ "log",
+ "rand",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-stream",
+]
+
+[[package]]
 name = "core-foundation"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1309,23 +1326,6 @@ name = "wasm-bindgen-shared"
 version = "0.2.84"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0046fef7e28c3804e5e38bfa31ea2a0f73905319b677e57ebe37e49358989b5d"
-
-[[package]]
-name = "weather_api_code"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "dotenv",
- "env_logger",
- "futures",
- "log",
- "rand",
- "reqwest",
- "serde",
- "serde_json",
- "tokio",
- "tokio-stream",
-]
 
 [[package]]
 name = "web-sys"
