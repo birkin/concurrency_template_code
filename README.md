@@ -1,7 +1,9 @@
 next...
-- add logging message in main()
-- try moving logging setup to function
-- try impporting logging setup from lib.rs or something.
+√ add logging message in main()
+√ try moving logging setup to function
+√ try impporting logging setup from lib.rs or something.
+- remove commented out code.
+- remove unused imports.
 
 ---
 ---
