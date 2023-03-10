@@ -16,6 +16,21 @@ use std::io::Write;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // set up logging -----------------------------------------------
+    setup_logging();
+
+    debug!( "main() log message" );
+
+    // make urls ----------------------------------------------------
+    let urls: Vec<std::string::String> = make_urls().await;
+    println!("urls, ``{:#?}``", urls);
+ 
+    // Return Ok() to indicate that the program completed successfully
+    Ok(())
+}
+
+
+// set up logging ---------------------------------------------------
+fn setup_logging() {
     let mut builder = Builder::new();
     let log_level_envar: String = "CNCRNCY_TMPLT__LOG_LEVEL".to_string();
     let log_level: String = std::env::var(&log_level_envar).unwrap_or_else(|error| {
@@ -44,15 +59,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         )
     });
     builder.init();
-    debug!("logging initialized");
-
-    // make urls ----------------------------------------------------
-    let urls: Vec<std::string::String> = make_urls().await;
-    println!("urls, ``{:#?}``", urls);
- 
-    // Return Ok() to indicate that the program completed successfully
-    Ok(())
-}
+    debug!("logging initialized");}
 
 
 // make urls --------------------------------------------------------

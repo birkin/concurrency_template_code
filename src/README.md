@@ -1,3 +1,11 @@
+next...
+- add logging message in main()
+- try moving logging setup to function
+- try impporting logging setup from lib.rs or something.
+
+---
+---
+
 figuring out the weather.gov api...
 
 <https://www.weather.gov/documentation/services-web-api>
