@@ -21,9 +21,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let log_level: String = std::env::var(&log_level_envar).unwrap_or_else(|error| {
         panic!("Problem getting envar, ``{:?}``; error, ``{:?}``", &log_level_envar, error);
     });
-    // let log_level: String = std::env::var("CNCRNCY_TMPLT__LOG_LEVEL").unwrap_or_else(|error| {
-    //     panic!("Problem getting envar -- ``{:?}``", error);
-    // });
     if log_level == "debug" {
         builder.filter(None, LevelFilter::Debug);
     } else  {
