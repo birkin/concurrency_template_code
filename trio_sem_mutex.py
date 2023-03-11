@@ -147,7 +147,7 @@ if __name__ == '__main__':
 """
 Usage...
 
-% source ../venv/bin/activate  # for access to trio and httpx
+% source ../env/bin/activate  # for access to trio and httpx
 % python3 ./trio_sem_mutex.py
 """
 
