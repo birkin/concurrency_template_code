@@ -2,6 +2,9 @@ readme coming....
 
 next...
 - build out make_urls()
+    - print the type of the initial random number.
+    - divide it by a thousand to get a 1.x/2.x float.
+    - put the float in the url.
 
 
 
