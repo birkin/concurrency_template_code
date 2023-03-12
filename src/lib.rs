@@ -60,7 +60,7 @@ pub async fn make_random_nums() -> Vec<i32> {
 
 // make results dict ------------------------------------------------
 pub async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::BTreeMap<i32, String> {
-    /* Creates a dict with random-numbers as keys and 'not yet' as values. */
+    /* Creates a dict with random-numbers as keys and 'init' as values. */
     let mut results: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
     for random_num in random_nums {
         results.insert(*random_num, "init".to_string());
