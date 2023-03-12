@@ -11,7 +11,7 @@ pub fn setup_logging() {
     let mut builder = Builder::new();
     let log_level_envar: String = "CNCRNCY_TMPLT__LOG_LEVEL".to_string();
     let log_level: String = std::env::var(&log_level_envar).unwrap_or_else(|error| {
-        panic!("Problem getting envar, ``{:?}``; error, ``{:?}``", &log_level_envar, error);
+        panic!("Problem getting envar, ``{:?}``; error, ``{:?}``. Did you source the envar.sh file?", &log_level_envar, error);
     });
     if log_level == "debug" {
         builder.filter(None, LevelFilter::Debug);
