@@ -4,6 +4,7 @@ extern crate log;
 use env_logger::{Builder};
 use log::{LevelFilter};
 use std::io::Write;
+use rand::Rng;
 
 
 // set up logging ---------------------------------------------------
@@ -37,6 +38,24 @@ pub fn setup_logging() {
     });
     builder.init();
     debug!("logging initialized");}
+
+
+// make random numbers ----------------------------------------------
+pub async fn make_random_nums() -> Vec<i32> {
+    /* Creates a list of unique random numbers. */
+    let mut random_nums: Vec<i32> = Vec::new();
+    while random_nums.len() < 10 {
+        let mut range_generator = rand::thread_rng();
+        let random_number: i32 = range_generator.gen_range(1800..=2200);
+        if !random_nums.contains(&random_number) {
+            random_nums.push(random_number);
+        }
+    }
+    // sort list
+    random_nums.sort();
+    println!("random_nums, ``{:#?}``", random_nums);
+    random_nums
+}
 
 
 // make results dict ------------------------------------------------
