@@ -6,12 +6,8 @@ Rust semaphore and mutex example.
 #[macro_use]
 extern crate log;
 
-
-// use env_logger::{Builder};
-// use log::{LevelFilter};
 use rand::Rng;
-
-// use std::io::Write;
+use std::collections::BTreeMap;
 
 // import logging
 use concurrency_template_code::setup_logging;
@@ -27,15 +23,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // generate list of random numbers ------------------------------
     /* These will be used for dict-keys and url-delays. */
     let random_nums: Vec<i32> = make_random_nums().await;
-    println!("random_nums, ``{:#?}``", random_nums);
 
     // initialize results dict --------------------------------------
-    let results: std::collections::HashMap<i32, String> = make_results_dict( &random_nums ).await;
-    // let mut results: std::collections::HashMap<i32, String> = std::collections::HashMap::new();
-    // for random_num in &random_nums {
-    //     results.insert(*random_num, "not yet".to_string());
-    // }
-    println!("results, ``{:#?}``", results);
+    let results: std::collections::BTreeMap<i32, String> = make_results_dict( &random_nums ).await;
+    
 
     // make urls ----------------------------------------------------
     let urls: Vec<std::string::String> = make_urls().await;
@@ -47,12 +38,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 
 // make results dict ------------------------------------------------
-async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::HashMap<i32, String> {
+async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::BTreeMap<i32, String> {
     /* Creates a dict with random-numbers as keys and 'not yet' as values. */
-    let mut results: std::collections::HashMap<i32, String> = std::collections::HashMap::new();
+    let mut results: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
     for random_num in random_nums {
         results.insert(*random_num, "init".to_string());
     }
+    println!("results, ``{:#?}``", results);
     results
 }
 
@@ -69,6 +61,7 @@ async fn make_random_nums() -> Vec<i32> {
     }
     // sort list
     random_nums.sort();
+    println!("random_nums, ``{:#?}``", random_nums);
     random_nums
 }
 
