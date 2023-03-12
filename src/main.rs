@@ -2,15 +2,14 @@
 Rust semaphore and mutex example.
 */
 
-// set up imports ---------------------------------------------------
-#[macro_use]
+// main imports -----------------------------------------------------
+#[macro_use]  // for logging
 extern crate log;
-
 use rand::Rng;
-use std::collections::BTreeMap;
 
-// import logging
+// lib.rs imports ---------------------------------------------------
 use concurrency_template_code::setup_logging;
+use concurrency_template_code::make_results_dict;
 
 // main controller --------------------------------------------------
 #[tokio::main]
@@ -25,7 +24,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let random_nums: Vec<i32> = make_random_nums().await;
 
     // initialize results dict --------------------------------------
-    let results: std::collections::BTreeMap<i32, String> = make_results_dict( &random_nums ).await;
+    /* This will hold all the results. 
+        Using BTreeMap instead of HashMap simply for convenient viewing of print-statements and logging. */
+    let _results: std::collections::BTreeMap<i32, String> = make_results_dict( &random_nums ).await;
     
 
     // make urls ----------------------------------------------------
@@ -36,17 +37,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-
-// make results dict ------------------------------------------------
-async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::BTreeMap<i32, String> {
-    /* Creates a dict with random-numbers as keys and 'not yet' as values. */
-    let mut results: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
-    for random_num in random_nums {
-        results.insert(*random_num, "init".to_string());
-    }
-    println!("results, ``{:#?}``", results);
-    results
-}
 
 // make random numbers ----------------------------------------------
 async fn make_random_nums() -> Vec<i32> {
