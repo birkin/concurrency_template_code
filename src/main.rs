@@ -31,11 +31,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /* This will hold all the results. 
         Using BTreeMap instead of HashMap simply for convenient viewing of print-statements and logging. */
     let mut results = make_results_dict( &random_nums ).await;
-    debug!( "testing to see if i still have access to results, ``{:#?}``", &results );
+    // debug!( "testing #1 to see if i still have access to results, ``{:#?}``", &results );
 
     // populate results dict with urls ------------------------------
     add_urls_to_results( &mut results ).await;
-    debug!( "testing to see if i still have access to results, ``{:#?}``", &results );
+    debug!( "testing #2 to see if i still have access to results, ``{:#?}``", &results );
 
 
 
@@ -49,8 +49,12 @@ async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::S
     
     // iterate through results-dict entries --------------------------
     for (key, value) in results {
-        debug!( "key, ``{:#?}``", &key);
-        debug!( "value, ``{:#?}``", &value);
+        debug!( "key, ``{:#?}``", &key );
+        debug!( "value, ``{:#?}``", &value );
+        let seconds_float: f32 = *key as f32 / 1000.0;
+        debug!( "seconds_float, ``{:#?}``", &seconds_float );
+        let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
+        debug!( "url_value, ``{:#?}``", &url_value );
     }
 
 }

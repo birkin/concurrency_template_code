@@ -11,6 +11,7 @@ next...
     √ store the httpbin url to the results-dict as a json-string.
     √ revise hashmap to hold another hashmap.
     - redo update urls now that we have a hashmap of hashmaps.
+        - I've build the new url, next to figure out how to update the hashmap.
     
 
 
