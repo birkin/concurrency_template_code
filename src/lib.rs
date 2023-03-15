@@ -3,8 +3,10 @@ extern crate log;
 
 use env_logger::{Builder};
 use log::{LevelFilter};
-use std::io::Write;
 use rand::Rng;
+use std::collections::BTreeMap;
+use std::collections::HashMap;
+use std::io::Write;
 
 
 // set up logging ---------------------------------------------------
@@ -59,12 +61,28 @@ pub async fn make_random_nums() -> Vec<i32> {
 
 
 // make results dict ------------------------------------------------
-pub async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::BTreeMap<i32, String> {
+pub async fn make_results_dict( random_nums: &Vec<i32> ) -> BTreeMap<i32, HashMap<String, String>> {
     /* Creates a dict with random-numbers as keys and 'init' as values. */
-    let mut results: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
+    let mut results: BTreeMap<i32, HashMap<String, String>> = BTreeMap::new();
     for random_num in random_nums {
-        results.insert(*random_num, "init".to_string());
+        let mut inner_map: HashMap<String, String> = HashMap::new();
+        inner_map.insert("url".to_string(), "foo".to_string());
+        inner_map.insert("time_taken".to_string(), "bar".to_string());
+        inner_map.insert("amz_id".to_string(), "baz".to_string());
+        debug!("inner_map, ``{:#?}``", inner_map);
+        results.insert(*random_num, inner_map);
     }
-    println!("results, ``{:#?}``", results);
+    debug!("results, ``{:#?}``", results);
     results
 }
+
+// // make results dict ------------------------------------------------
+// pub async fn make_results_dict( random_nums: &Vec<i32> ) -> std::collections::BTreeMap<i32, String> {
+//     /* Creates a dict with random-numbers as keys and 'init' as values. */
+//     let mut results: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
+//     for random_num in random_nums {
+//         results.insert(*random_num, "init".to_string());
+//     }
+//     println!("results, ``{:#?}``", results);
+//     results
+// }

@@ -30,10 +30,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     /* This will hold all the results. 
         Using BTreeMap instead of HashMap simply for convenient viewing of print-statements and logging. */
     let mut results = make_results_dict( &random_nums ).await;
+    debug!( "testing to see if i still have access to results, ``{:#?}``", &results );
 
     // populate results dict with urls ------------------------------
-    add_urls_to_results( &mut results, &random_nums ).await;
-    debug!( "testing to see if i still have access to results, ``{:#?}``", &results );
+    // add_urls_to_results( &mut results, &random_nums ).await;
+    // debug!( "testing to see if i still have access to results, ``{:#?}``", &results );
 
 
 
@@ -49,7 +50,11 @@ async fn add_urls_to_results( results: &mut BTreeMap<i32, String>, random_nums: 
     for integer_element in random_nums {
         // let zz: () = integer_element; // yields: found `&i32`
         let mut url_dict: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
-        url_dict.insert("url".to_string(), "http://httpbin/delay/num_coming".to_string());
+        let seconds_float: f32 = *integer_element as f32 / 1000.0;
+        let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
+        debug!( "url_value, ``{:#?}``", &url_value);
+
+        url_dict.insert("url".to_string(), url_value);
         println!("url_dict, ``{:#?}``", &url_dict);
         
         let json_string = json!(url_dict).to_string();
