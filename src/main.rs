@@ -45,18 +45,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 
 // make urls --------------------------------------------------------
-async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) {
-    
-    // iterate through results-dict entries --------------------------
-    for (key, value) in results {
-        debug!( "key, ``{:#?}``", &key );
-        debug!( "value, ``{:#?}``", &value );
+async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
+    /* Iterates through the result items, getting access to the inner hashmap to update the url value. */
+    for ( key, inner_hashmap ) in results.iter_mut() {
         let seconds_float: f32 = *key as f32 / 1000.0;
-        debug!( "seconds_float, ``{:#?}``", &seconds_float );
         let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
-        debug!( "url_value, ``{:#?}``", &url_value );
+        if let Some(url) = inner_hashmap.get_mut("url") {
+            *url = url_value;  // the asterisk dereferences the value so it can be changed
+        }
     }
-
+    debug!( "results after url-update, ``{:#?}``", &results );
 }
 
 
