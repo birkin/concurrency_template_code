@@ -1,3 +1,5 @@
+/* Functions called from main.rs main() */
+
 #[macro_use]
 extern crate log;
 
@@ -7,6 +9,20 @@ use rand::Rng;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::io::Write;
+
+
+// make urls --------------------------------------------------------
+pub async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
+    /* Iterates through the result items, getting access to the inner hashmap to update the url value. */
+    for ( key, inner_hashmap ) in results.iter_mut() {
+        let seconds_float: f32 = *key as f32 / 1000.0;
+        let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
+        if let Some(url) = inner_hashmap.get_mut("url") {
+            *url = url_value;  // the asterisk dereferences the value so it can be changed
+        }
+    }
+    debug!( "results after url-update, ``{:#?}``", &results );
+}
 
 
 // set up logging ---------------------------------------------------

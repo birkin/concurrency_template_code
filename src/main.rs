@@ -6,13 +6,14 @@ Rust semaphore and mutex example.
 #[macro_use]  // for logging
 extern crate log;
 // use serde_json::{json};
-use std::collections::BTreeMap;
-use std::collections::HashMap;
+// use std::collections::BTreeMap;
+// use std::collections::HashMap;
 
 // lib.rs imports ---------------------------------------------------
 use concurrency_template_code::setup_logging;
 use concurrency_template_code::make_random_nums;
 use concurrency_template_code::make_results_dict;
+use concurrency_template_code::add_urls_to_results;
 
 
 // main controller --------------------------------------------------
@@ -28,7 +29,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let random_nums: Vec<i32> = make_random_nums().await;
 
     // initialize results dict --------------------------------------
-    /* This will hold all the results. 
+    /*  This will hold all the results. 
         Using BTreeMap instead of HashMap simply for convenient viewing of print-statements and logging. */
     let mut results = make_results_dict( &random_nums ).await;
     // debug!( "testing #1 to see if i still have access to results, ``{:#?}``", &results );
@@ -44,18 +45,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 
-// make urls --------------------------------------------------------
-async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-    /* Iterates through the result items, getting access to the inner hashmap to update the url value. */
-    for ( key, inner_hashmap ) in results.iter_mut() {
-        let seconds_float: f32 = *key as f32 / 1000.0;
-        let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
-        if let Some(url) = inner_hashmap.get_mut("url") {
-            *url = url_value;  // the asterisk dereferences the value so it can be changed
-        }
-    }
-    debug!( "results after url-update, ``{:#?}``", &results );
-}
+// // make urls --------------------------------------------------------
+// async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
+//     /* Iterates through the result items, getting access to the inner hashmap to update the url value. */
+//     for ( key, inner_hashmap ) in results.iter_mut() {
+//         let seconds_float: f32 = *key as f32 / 1000.0;
+//         let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
+//         if let Some(url) = inner_hashmap.get_mut("url") {
+//             *url = url_value;  // the asterisk dereferences the value so it can be changed
+//         }
+//     }
+//     debug!( "results after url-update, ``{:#?}``", &results );
+// }
 
 
 
