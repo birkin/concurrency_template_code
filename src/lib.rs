@@ -13,9 +13,12 @@ use std::io::Write;
 
 // make urls --------------------------------------------------------
 pub async fn add_urls_to_results( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-    /* Iterates through the result items, getting access to the inner hashmap to update the url value. */
+    /* Iterates through the result items
+        - gets the key (the random number)
+        - divides the key by 1000 to get the (float) number of seconds that'll be used in the delay url
+        - gets access to the inner hashmap to update the url value. */
     for ( key, inner_hashmap ) in results.iter_mut() {
-        let seconds_float: f32 = *key as f32 / 1000.0;
+        let seconds_float: f32 = *key as f32 / 1000.0;  // converts the integer key to a smaller float for the 
         let url_value: String = format!("http://httpbin.org/delay/{:.3 }", seconds_float);  // limits the number of decimal places to 3
         if let Some(url) = inner_hashmap.get_mut("url") {
             *url = url_value;  // the asterisk dereferences the value so it can be changed
@@ -62,7 +65,7 @@ pub fn setup_logging() {
 pub async fn make_random_nums() -> Vec<i32> {
     /* Creates a list of unique random numbers. */
     let mut random_nums: Vec<i32> = Vec::new();
-    while random_nums.len() < 10 {
+    while random_nums.len() < 10 {  // TODO: make this a parameter passed in from settings
         let mut range_generator = rand::thread_rng();
         let random_number: i32 = range_generator.gen_range(1800..=2200);
         if !random_nums.contains(&random_number) {
@@ -78,7 +81,8 @@ pub async fn make_random_nums() -> Vec<i32> {
 
 // make results dict ------------------------------------------------
 pub async fn make_results_dict( random_nums: &Vec<i32> ) -> BTreeMap<i32, HashMap<String, String>> {
-    /* Creates a dict with random-numbers as keys and 'init' as values. */
+    /* Creates a dict with the random-numbers as keys and another dict as values.
+        The outer map is a BTreeMap instead of a HashMap just to be able to see the keys sorted in logging for development. */
     let mut results: BTreeMap<i32, HashMap<String, String>> = BTreeMap::new();
     for random_num in random_nums {
         let mut inner_map: HashMap<String, String> = HashMap::new();

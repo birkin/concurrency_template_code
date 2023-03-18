@@ -12,7 +12,7 @@ next...
     √ revise hashmap to hold another hashmap.
     √ redo update urls now that we have a hashmap of hashmaps.
         √ I've build the new url, next to figure out how to update the hashmap.
-- move make_urls() to lib.rs.
+√ move make_urls() to lib.rs.
 - write up this readme.
 - create the file that will be written to synchronously.
 - set up dummy architecture to create a queue of jobs, limited by a capacitor/semaphore number.
