@@ -47,7 +47,8 @@ For {URLS_COUNT} urls, each requiring about 2-seconds to respond,
     and a file-write delay of {SYNCHRONOUS_WRITE_DELAY} seconds, 
     sequential processing would take about {estimate_sequential_processing_time} seconds.
 
-Our asynchrous processing, with a limit of {LIMIT} requests at-a-time, 
+Our asynchrous processing, with a limit of {LIMIT} requests at-a-time,
+    still with a file-write delay of {SYNCHRONOUS_WRITE_DELAY} seconds,
     should take a little over {estimate_async_processing_time} seconds.
 ---
 ''' )
