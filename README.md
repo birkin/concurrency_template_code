@@ -3,6 +3,7 @@ on this page...
 - [Purpose](#purpose)
 - [Features](#features)
 - [Languages & packages](#languages--packages)
+- [Usage](#usage)
 - [Notes](#working-notes)
 
 ---
@@ -46,13 +47,31 @@ Not all work would require all features. But it'll be nice to have them all in o
 ---
 
 
+# Usage 
+
+## Python
+
+Assumes...
+- a virtual-environment has been created.
+- the `trio_sem_mutex.pip` file has been pip-installed.
+
+Then...
+
+```
+$ cd ./python_code
+$ source ../../env/bin/activate
+$ python3 ./trio_sem_mutex.py
+```
+
+---
+
+
 # Working notes
 
 _(since I work on this as a side-project, I'll keep notes here to keep track of what I need to do next.)_
 
 ## next...
 
-- write up this readme.
 - figure out where to put "Usage" instructions (ie sourcing the py venv or the rust env settings file)
 - maybe add a dummy env-settings file.
 - now that I have a better idea of what I want to do, go back and update the python code to match what I want to do in rust.
@@ -77,5 +96,6 @@ _(since I work on this as a side-project, I'll keep notes here to keep track of 
     - redo update urls now that we have a hashmap of hashmaps.
         - I've build the new url, next to figure out how to update the hashmap.
 - move make_urls() to lib.rs.
+- write up this readme.
 
 ---
