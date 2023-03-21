@@ -63,12 +63,30 @@ $ source ../../env/bin/activate
 $ python3 ./trio_sem_mutex.py
 ```
 
+## Rust
+
+Assumes...
+- a `settings_envar.sh` shell-script has been created, containing a series of export statements like:
+    
+        export CNCRNCY_TMPLT__LOG_LEVEL="debug"
+
+- that file has been source, like: 
+
+        source ../../rust_envar_settings.sh
+
+Then...
+
+```
+$ cd ./rust_code
+$ cargo run
+```
+
 ---
 
 
-# Working notes
+# Dev notes
 
-_(since I work on this as a side-project, I'll keep notes here to keep track of what I need to do next.)_
+_(I work on this as a side-project; I'll keep notes here to keep track of what I need to do next.)_
 
 ## next...
 
