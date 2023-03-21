@@ -16,6 +16,13 @@ use concurrency_template_code::get_max_concurrent_requests;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 
+// use tokio::sync::Mutex;
+// use tokio::task;
+// use tokio::time::{sleep, Duration};
+
+// use std::sync::Arc;
+
+
 
 // main controller --------------------------------------------------
 #[tokio::main]
@@ -46,8 +53,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 
 async fn make_requests( _results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-    
+    // Set the maximum number of concurrent requests
     let max_concurrent_requests: i32 = get_max_concurrent_requests().await;
-
+    debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
 
 }
+
+
