@@ -52,11 +52,39 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 
+use std::sync::Arc;
+use std::time::Duration;
+use tokio::sync::Semaphore;
+use tokio::task;
+
 async fn make_requests( _results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
     // Set the maximum number of concurrent requests
     let max_concurrent_requests: i32 = get_max_concurrent_requests().await;
     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
 
+    const MAX_CONCURRENT_JOBS: usize = 3;
+    const TOTAL_JOBS: usize = 10;
+
+    let semaphore = Arc::new(Semaphore::new(MAX_CONCURRENT_JOBS));
+
+    let tasks = (0..TOTAL_JOBS)
+        .map(|i| {
+            let permit = Arc::clone(&semaphore);
+            task::spawn(async move {
+                let _permit = permit.acquire().await;
+                execute_job(i).await;
+            })
+        })
+        .collect::<Vec<_>>();
+
+    futures::future::join_all(tasks).await;
+
 }
 
+
+async fn execute_job(i: usize) {
+    println!("Starting job {}", i);
+    tokio::time::sleep(Duration::from_secs(1)).await;
+    println!("Finished job {}", i);
+}
 
