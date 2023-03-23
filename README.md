@@ -90,7 +90,6 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 
 ## next...
 
-- set up dummy architecture to create a queue of jobs, limited by a capacitor/semaphore number.
 - have each job do some work (initially a simply delay of seconds, but later a call to httpbin) 
 - create the file that will be written to synchronously.
 - write the results to the backup file synchronously.
@@ -117,6 +116,7 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 - write up this readme.
 - figure out where to put "Usage" instructions (ie sourcing the py venv or the rust env settings file)
 - maybe add a dummy env-settings file. -- no need for now; if I have add more settings, I will then.
+- set up dummy architecture to create a queue of jobs, limited by a capacitor/semaphore number.
 
 
 ---

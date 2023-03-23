@@ -12,7 +12,8 @@ use std::io::Write;
 
 
 // get max_concurrent_requests from envar ---------------------------
-pub async fn get_max_concurrent_requests() -> i32 {
+
+pub async fn get_max_concurrent_requests() -> usize {
     /* Grabs max_concurrent_requests from envar.
         Called by make_requests() */
     let max_concurrent_requests_envar = "CNCRNCY_TMPLT__MAX_CONCURRENT_REQUESTS".to_string();  // enables error message to show what's missing
@@ -20,12 +21,27 @@ pub async fn get_max_concurrent_requests() -> i32 {
         panic!("Problem getting envar, ``{:?}``; error, ``{:?}``. Did you source the envar.sh file?", &max_concurrent_requests_envar, error);
     });
     // convert to int
-    let max_concurrent_requests: i32 = max_concurrent_requests_string.parse().unwrap_or_else(|error| {
+    let max_concurrent_requests: usize = max_concurrent_requests_string.parse().unwrap_or_else(|error| {
         panic!("Problem converting envar, ``{:?}`` to int; error, ``{:?}``", &max_concurrent_requests_envar, error);
     });
     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests);
     max_concurrent_requests
 }
+
+// pub async fn get_max_concurrent_requests() -> i32 {
+//     /* Grabs max_concurrent_requests from envar.
+//         Called by make_requests() */
+//     let max_concurrent_requests_envar = "CNCRNCY_TMPLT__MAX_CONCURRENT_REQUESTS".to_string();  // enables error message to show what's missing
+//     let max_concurrent_requests_string: String = std::env::var(&max_concurrent_requests_envar).unwrap_or_else(|error| {
+//         panic!("Problem getting envar, ``{:?}``; error, ``{:?}``. Did you source the envar.sh file?", &max_concurrent_requests_envar, error);
+//     });
+//     // convert to int
+//     let max_concurrent_requests: i32 = max_concurrent_requests_string.parse().unwrap_or_else(|error| {
+//         panic!("Problem converting envar, ``{:?}`` to int; error, ``{:?}``", &max_concurrent_requests_envar, error);
+//     });
+//     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests);
+//     max_concurrent_requests
+// }
 
 
 // make urls --------------------------------------------------------
