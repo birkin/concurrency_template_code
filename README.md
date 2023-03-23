@@ -117,6 +117,6 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 - figure out where to put "Usage" instructions (ie sourcing the py venv or the rust env settings file)
 - maybe add a dummy env-settings file. -- no need for now; if I have add more settings, I will then.
 - set up dummy architecture to create a queue of jobs, limited by a capacitor/semaphore number.
-
+- use actual max-concurrency envar value.
 
 ---

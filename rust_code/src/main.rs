@@ -57,17 +57,18 @@ use std::time::Duration;
 use tokio::sync::Semaphore;
 use tokio::task;
 
-async fn make_requests( _results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-    // Set the maximum number of concurrent requests
+async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
+    // get the maximum number of concurrent requests ----------------
     let max_concurrent_requests: usize = get_max_concurrent_requests().await;
     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
 
-    // const MAX_CONCURRENT_JOBS: usize = 3;
-    const TOTAL_JOBS: usize = 10;
+    // get the total number of jobs ---------------------------------
+    let total_jobs: usize = results.len();
 
+    // set up semaphore ---------------------------------------------
     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
 
-    let tasks = (0..TOTAL_JOBS)
+    let tasks = (0..total_jobs)
         .map(|i| {
             let permit = Arc::clone(&semaphore);
             task::spawn(async move {
@@ -97,13 +98,13 @@ async fn execute_job(i: usize) {
 
 // async fn make_requests( _results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
 //     // Set the maximum number of concurrent requests
-//     let max_concurrent_requests: i32 = get_max_concurrent_requests().await;
+//     let max_concurrent_requests: usize = get_max_concurrent_requests().await;
 //     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
 
-//     const MAX_CONCURRENT_JOBS: usize = 3;
+//     // const MAX_CONCURRENT_JOBS: usize = 3;
 //     const TOTAL_JOBS: usize = 10;
 
-//     let semaphore = Arc::new(Semaphore::new(MAX_CONCURRENT_JOBS));
+//     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
 
 //     let tasks = (0..TOTAL_JOBS)
 //         .map(|i| {
