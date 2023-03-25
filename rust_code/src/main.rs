@@ -67,7 +67,6 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
 
     // set up the backup file ---------------------------------------
-    // let backup_file = Arc::new(Mutex::new(File::create("results.json").unwrap()));
     let file_mutex = Arc::new(Mutex::new(File::create("results.txt").await.unwrap()));
 
     let tasks = (0..total_jobs)

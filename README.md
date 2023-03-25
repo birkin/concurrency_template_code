@@ -90,10 +90,7 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 
 ## next...
 
-- consider using the list or random-numbers or the original url vector to determine the number of jobs to spawn.
 - have each job do some work (initially a simply delay of seconds, but later a call to httpbin) 
-- create the file that will be written to synchronously.
-- write the results to the backup file synchronously.
 - now that I have a better idea of what I want to do, go back and update the python code to match what I want to do in rust.
 
 - dockerize for super-easy setup.
@@ -120,5 +117,7 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 - set up dummy architecture to create a queue of jobs, limited by a capacitor/semaphore number.
 - use actual max-concurrency envar value.
 - use count of pre-made results-holder for number of jobs to spawn.
+- create the file that will be written to synchronously.
+- write the results to the backup file synchronously.
 
 ---
