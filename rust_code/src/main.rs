@@ -16,13 +16,6 @@ use concurrency_template_code::get_max_concurrent_requests;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 
-// use tokio::sync::Mutex;
-// use tokio::task;
-// use tokio::time::{sleep, Duration};
-
-// use std::sync::Arc;
-
-
 
 // main controller --------------------------------------------------
 #[tokio::main]
@@ -52,10 +45,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 
+// use tokio::sync::Semaphore;
+// use std::fs::File;
 use std::sync::Arc;
 use std::time::Duration;
-use tokio::sync::Semaphore;
+use tokio::sync::{Mutex, Semaphore};
 use tokio::task;
+use tokio::fs::File;
+use tokio::io::AsyncWriteExt;
+
 
 async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
     // get the maximum number of concurrent requests ----------------
@@ -68,12 +66,18 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
     // set up semaphore ---------------------------------------------
     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
 
+    // set up the backup file ---------------------------------------
+    // let backup_file = Arc::new(Mutex::new(File::create("results.json").unwrap()));
+    let file_mutex = Arc::new(Mutex::new(File::create("results.txt").await.unwrap()));
+
     let tasks = (0..total_jobs)
         .map(|i| {
             let permit = Arc::clone(&semaphore);
+            let backup_file_clone = Arc::clone(&file_mutex);
             task::spawn(async move {
                 let _permit = permit.acquire().await;
                 execute_job(i).await;
+                backup_results_to_file( i, backup_file_clone ).await.unwrap();
             })
         })
         .collect::<Vec<_>>();
@@ -83,39 +87,19 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
 }
 
 
+async fn backup_results_to_file( 
+    job_number: usize, 
+    backup_file_clone: Arc<Mutex<File>>
+    ) -> Result<(), Box<dyn std::error::Error>>  {
+    println!("Starting backup after job {}", job_number);
+    let mut file_writer = backup_file_clone.lock().await;
+    file_writer.write_all(format!("{}\n", job_number).as_bytes()).await?;
+    println!("Finished backup after job {}", job_number);
+    Ok(())
+}
+
 async fn execute_job(i: usize) {
     println!("Starting job {}", i);
     tokio::time::sleep(Duration::from_secs(1)).await;
     println!("Finished job {}", i);
 }
-
-
-
-// use std::sync::Arc;
-// use std::time::Duration;
-// use tokio::sync::Semaphore;
-// use tokio::task;
-
-// async fn make_requests( _results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-//     // Set the maximum number of concurrent requests
-//     let max_concurrent_requests: usize = get_max_concurrent_requests().await;
-//     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
-
-//     // const MAX_CONCURRENT_JOBS: usize = 3;
-//     const TOTAL_JOBS: usize = 10;
-
-//     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
-
-//     let tasks = (0..TOTAL_JOBS)
-//         .map(|i| {
-//             let permit = Arc::clone(&semaphore);
-//             task::spawn(async move {
-//                 let _permit = permit.acquire().await;
-//                 execute_job(i).await;
-//             })
-//         })
-//         .collect::<Vec<_>>();
-
-//     futures::future::join_all(tasks).await;
-
-// }
