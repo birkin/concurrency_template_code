@@ -39,21 +39,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // make requests ------------------------------------------------
     make_requests( &mut results ).await;
+    debug!( "results after everything, ``{:#?}``", &results );
 
     // Return Ok() to indicate that the program completed successfully
     Ok( () )
 }
 
 
-// use tokio::sync::Semaphore;
-// use std::fs::File;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::sync::{Mutex, Semaphore};
 use tokio::task;
 use tokio::fs::File;
 use tokio::io::AsyncWriteExt;
-
 
 async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
     // get the maximum number of concurrent requests ----------------
@@ -73,7 +71,9 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
     let mut tasks = Vec::new();
 
     // Iterate through the results vector
-    for (i, _) in results.iter().enumerate() {
+    for (i, (key, val)) in results.iter().enumerate() {
+        debug!( "key, ``{:?}``", &key );
+        debug!( "val, ``{:?}``", &val );
         let permit = Arc::clone(&semaphore);
         let backup_file_clone = Arc::clone(&file_mutex);
         let task = task::spawn(async move {
