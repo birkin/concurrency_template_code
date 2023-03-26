@@ -121,18 +121,13 @@ pub async fn make_results_dict( random_nums: &Vec<i32> ) -> BTreeMap<i32, HashMa
 }
 
 
-
-
-
-
-// use std::sync::Arc;
-// use std::time::Duration;
-// use tokio::sync::{Mutex, Semaphore};
-// use tokio::task;
-// use tokio::fs::File;
-// use tokio::io::AsyncWriteExt;
-
 pub async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
+    /* Creates a sepaphore to limit the number of concurrent requests.
+        Creates a mutex-protected backup file to store the results in case of a crash.
+        Iterates through the results-dict to create tasks for each entry.
+        - executes the job
+        - saves the results-dict to a backup file synchronously
+    */
     // get the maximum number of concurrent requests ----------------
     let max_concurrent_requests: usize = get_max_concurrent_requests().await;
     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
