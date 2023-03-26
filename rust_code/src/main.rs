@@ -69,8 +69,6 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
     // set up the backup file ---------------------------------------
     let file_mutex = Arc::new(Mutex::new(File::create("results.txt").await.unwrap()));
 
-
-
     // Initialize an empty vector to store tasks
     let mut tasks = Vec::new();
 
@@ -90,71 +88,22 @@ async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String,
 
     futures::future::join_all(tasks).await;
 
-
-
-    // let tasks = (0..total_jobs)
-    //     .map(|i| {
-    //         let permit = Arc::clone(&semaphore);
-    //         let backup_file_clone = Arc::clone(&file_mutex);
-    //         task::spawn(async move {
-    //             let _permit = permit.acquire().await;
-    //             execute_job(i).await;
-    //             backup_results_to_file( i, backup_file_clone ).await.unwrap();
-    //         })
-    //     })
-    //     .collect::<Vec<_>>();
-
-    // futures::future::join_all(tasks).await;
-
 }
-
-
 
 
 async fn backup_results_to_file( 
     job_number: usize, 
     backup_file_clone: Arc<Mutex<File>>
     ) -> Result<(), Box<dyn std::error::Error>>  {
-    println!("Starting backup after job {}", job_number);
     let mut file_writer = backup_file_clone.lock().await;
+    debug!("Starting backup after job {}", job_number);
     file_writer.write_all(format!("{}\n", job_number).as_bytes()).await?;
-    println!("Finished backup after job {}", job_number);
+    debug!("Finished backup after job {}", job_number);
     Ok(())
 }
 
 async fn execute_job(i: usize) {
-    println!("Starting job {}", i);
+    debug!("Starting job {}", i);
     tokio::time::sleep(Duration::from_secs(1)).await;
-    println!("Finished job {}", i);
+    debug!("Finished job {}", i);
 }
-
-
-// async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::String, std::string::String>> ) -> () {
-//     // get the maximum number of concurrent requests ----------------
-//     let max_concurrent_requests: usize = get_max_concurrent_requests().await;
-//     debug!( "max_concurrent_requests, ``{:?}``", &max_concurrent_requests );
-
-//     // get the total number of jobs ---------------------------------
-//     let total_jobs: usize = results.len();
-
-//     // set up semaphore ---------------------------------------------
-//     let semaphore = Arc::new(Semaphore::new(max_concurrent_requests));
-
-//     // set up the backup file ---------------------------------------
-//     let file_mutex = Arc::new(Mutex::new(File::create("results.txt").await.unwrap()));
-
-//     let tasks = (0..total_jobs)
-//         .map(|i| {
-//             let permit = Arc::clone(&semaphore);
-//             let backup_file_clone = Arc::clone(&file_mutex);
-//             task::spawn(async move {
-//                 let _permit = permit.acquire().await;
-//                 execute_job(i).await;
-//                 backup_results_to_file( i, backup_file_clone ).await.unwrap();
-//             })
-//         })
-//         .collect::<Vec<_>>();
-
-//     futures::future::join_all(tasks).await;
-
-// }
