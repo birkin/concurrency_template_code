@@ -90,10 +90,10 @@ _(I work on this as a side-project; I'll keep notes here to keep track of what I
 
 ## next...
 
-- have each job do some work (initially a simply delay of seconds, but later a call to httpbin) 
+- start work to make the request call httpbin.org.
+- save the response to the results-dict. 
 - now that I have a better idea of what I want to do, go back and update the python code to match what I want to do in rust.
-
-- dockerize for super-easy setup.
+- maybe: dockerize for super-easy setup.
 
 
 ## done...
