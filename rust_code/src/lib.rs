@@ -131,9 +131,9 @@ pub async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::Str
     let mut tasks = Vec::new();
 
     // Iterate through the results vector ---------------------------
-    for (i, (key, val)) in results.iter().enumerate() {
+    for (i, (key, inner_hashmap)) in results.iter().enumerate() {
         debug!( "key, ``{:?}``", &key );
-        debug!( "val, ``{:?}``", &val );
+        debug!( "inner_hashmap, ``{:?}``", &inner_hashmap );
         let permit = Arc::clone(&semaphore);
         let backup_file_clone = Arc::clone(&file_mutex);
         let task = task::spawn(async move {
