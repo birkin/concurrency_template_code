@@ -138,7 +138,7 @@ pub async fn make_requests( results: &mut BTreeMap<i32, HashMap<std::string::Str
         let backup_file_clone = Arc::clone(&file_mutex);
         let task = task::spawn(async move {
             let _permit = permit.acquire().await;
-            execute_job(i).await;
+            let amz_id = execute_job(i).await;
             backup_results_to_file(i, backup_file_clone).await.unwrap();
         });
 
@@ -166,12 +166,13 @@ pub async fn get_max_concurrent_requests() -> usize {
     max_concurrent_requests
 }
 
-async fn execute_job(i: usize) {
+async fn execute_job(i: usize) -> String {
     /* Will call httpbin.org/delay/{seconds} and store part of the response to the results-dict.
         Called by make_requests() */
     debug!("Starting job {}", i);
     tokio::time::sleep(Duration::from_secs(1)).await;
     debug!("Finished job {}", i);
+    "foo".to_string()
 }
 
 async fn backup_results_to_file( 
