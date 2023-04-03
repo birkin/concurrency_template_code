@@ -6,6 +6,10 @@ Demo of using multiprocessing library showing...
 - ability for concurrent processes to write to disk synchronously (avoiding overwrit race-conditions)
 - doc-strings and comments to explain what's going on (for myself! 🙂)
 
+Usage...
+- % source ../../venv/bin/activate   (to load `requests`)
+- % python ./multiprocessing_example.py
+
 Note that multiprocessing can be used _much_ more simply than this if you don't need these features.
 
 Helpful resources:
