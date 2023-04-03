@@ -1,3 +1,31 @@
+"""
+Demo of using multiprocessing library showing...
+- concurrency
+- ability to limit number of concurrent calls
+- ability to store results from different processes
+- ability for concurrent processes to write to disk synchronously (avoiding overwrit race-conditions)
+- doc-strings and comments to explain what's going on (for myself! 🙂)
+
+Note that multiprocessing can be used _much_ more simply than this if you don't need these features.
+
+Helpful resources:
+- <https://superfastpython.com/category/multiprocessing/>
+- <https://chat.openai.com/chat>  
+
+The idea here is to: 
+- make 10 calls each taking a little over 2 seconds
+- limit the number of concurrent calls to 3
+- store the results to a shared dict
+- write the dict -- synchronously -- to disk every time a result is added
+
+If performed sequentially, the calls would take a little over 20 seconds,
+    and the .5 second file-write delay would add another 5 seconds,
+    for a total of a bit over 25 seconds.
+
+A threading/multiprocessing blast of one process/thread per url-call  would take a little over 2 seconds; 
+    this exercise demos realistic overhead and still saves about half the time.
+"""
+
 import json, os, pprint, sys, time
 from multiprocessing import Pool, Manager
 
