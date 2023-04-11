@@ -1,10 +1,4 @@
-// Add to Cargo.toml:
-// [dependencies]
-// tokio = { version = "1.0", features = ["full"] }
-// reqwest = "0.11"
-// serde = { version = "1.0", features = ["derive"] }
-// serde_json = "1.0"
-
+use std::collections::BTreeMap;
 use std::env;
 use std::fs::File;
 use std::io::Write;
@@ -35,13 +29,13 @@ async fn fetch_url(delay: f64) -> (f64, String) {
     (delay, response_id)
 }
 
-async fn worker(delay: f64, shared_results: Arc<Mutex<std::collections::HashMap<f64, String>>>) {
+async fn worker(delay: f64, shared_results: Arc<Mutex<BTreeMap<f64, String>>>) {
     let response_result = fetch_url(delay).await;
     store_result(shared_results, response_result).await;
 }
 
 async fn store_result(
-    shared_results: Arc<Mutex<std::collections::HashMap<f64, String>>>,
+    shared_results: Arc<Mutex<BTreeMap<f64, String>>>,
     response_result: (f64, String),
 ) {
     println!("Saving to file");
@@ -62,7 +56,7 @@ async fn main() {
         .unwrap_or("3".to_string())
         .parse::<usize>()
         .unwrap();
-    let shared_results = Arc::new(Mutex::new(std::collections::HashMap::new()));
+    let shared_results = Arc::new(Mutex::new(BTreeMap::new()));
 
     let start_time = Instant::now();
 
@@ -91,53 +85,3 @@ async fn main() {
         full_elapsed_time.subsec_millis()
     );
 }
-
-
-
-
-
-
-
-// /*  Rust semaphore and mutex example.
-//     See readme for info and usage.  */
-
-
-// // main imports -----------------------------------------------------
-// #[macro_use]  // for logging
-// extern crate log;
-
-// // lib.rs imports ---------------------------------------------------
-// use concurrency_template_code::setup_logging;
-// use concurrency_template_code::make_random_nums;
-// use concurrency_template_code::make_results_dict;
-// use concurrency_template_code::add_urls_to_results;
-// use concurrency_template_code::make_requests;
-
-
-// // main controller --------------------------------------------------
-// #[tokio::main]
-// async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
-//     // set up logging -----------------------------------------------
-//     setup_logging();
-//     debug!( "main() log message" );
-
-//     // generate list of random numbers ------------------------------
-//     /* These will be used for dict-keys and url-delays. */
-//     let random_nums: Vec<i32> = make_random_nums().await;
-
-//     // initialize results dict --------------------------------------
-//     /*  This will hold all the results. 
-//         Using BTreeMap instead of HashMap simply for convenient viewing of print-statements and logging. */
-//     let mut results = make_results_dict( &random_nums ).await;
-
-//     // populate results dict with urls ------------------------------
-//     add_urls_to_results( &mut results ).await;
-
-//     // make requests ------------------------------------------------
-//     make_requests( &mut results ).await;
-//     debug!( "results after everything, ``{:#?}``", &results );
-
-//     // Return Ok() to indicate that the program completed successfully
-//     Ok( () )
-// }
