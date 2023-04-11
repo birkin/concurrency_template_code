@@ -2,6 +2,7 @@ use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::Write;
 use std::sync::{Arc, Mutex};
+use std::time::Instant;
 
 use ordered_float::OrderedFloat;
 use reqwest::Url;
@@ -58,6 +59,8 @@ async fn main() {
     let max_concurrent_calls = 3;
     let shared_results = Arc::new(Mutex::new(BTreeMap::<SerializableOrderedFloat, String>::new()));
 
+    let start_time = Instant::now();
+
     let mut handles = Vec::new();
     let mut current_concurrent_calls = 0;
 
@@ -78,4 +81,13 @@ async fn main() {
     for handle in handles {
         handle.await.unwrap();
     }
+
+    let end_time = Instant::now();
+    let full_elapsed_time = end_time.duration_since(start_time);
+    println!(
+        "Full elapsed time: {}.{:03} seconds",
+        full_elapsed_time.as_secs(),
+        full_elapsed_time.subsec_millis()
+    );
+
 }
